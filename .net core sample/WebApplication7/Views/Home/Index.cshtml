@@ -1,0 +1,52 @@
+﻿<ejs-grid id="Grid" dataSource="@ViewBag.DataSource" beforePrint="beforePrint" toolbar="@(new List<string>() { "Print" })">
+    <e-grid-columns>
+        <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
+        <e-grid-column field="CustomerID" headerText="Customer ID" width="150"></e-grid-column>
+        <e-grid-column field="ShipCity" headerText="Ship City" width="150"></e-grid-column>
+        <e-grid-column field="ShipName" headerText="Ship Name" width="150"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+
+
+<script>
+    function beforePrint(args) {
+        if (args.requestType == "print") {
+
+            // creating element for title
+
+            var title = document.createElement('div')
+            title.style.height = "40px"
+            var div1 = document.createElement('div')
+            div1.innerText = "Syncfusion Software Pvt Ltd"
+            div1.style.textAlign = "center"
+            div1.style.fontSize = "20px"
+            div1.style.color = "#dc143c"
+            title.append(div1)
+            args.element.prepend(title)
+
+            // add the element thead in the table to show column header in each pages
+
+            var thead = args.element.getElementsByClassName('e-gridheader')[0].getElementsByTagName('thead')[0];
+            var table = args.element.getElementsByClassName('e-gridcontent')[0].getElementsByTagName('table')[0];
+            table.insertBefore(thead, table.children[1]);
+
+            // styling the grid headers and rows
+
+            var rows = table.getElementsByTagName('tbody')[0].getElementsByClassName('e-row')
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].style.backgroundColor = "#99ffcc";
+            }
+
+            var altrows = table.getElementsByTagName('tbody')[0].getElementsByClassName('e-altrow')
+            for (var i = 0; i < altrows.length; i++) {
+                altrows[i].style.backgroundColor = "#ffffb3";
+            }
+
+            var headers = table.getElementsByClassName('e-headercell')
+            for (var i = 0; i < headers.length; i++) {
+                headers[i].style.backgroundColor = "#ff00ff";
+            }
+        }
+    }
+</script>
